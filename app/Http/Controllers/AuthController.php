@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\User;
+use App\Role;
 class AuthController extends Controller
 {
     /**
@@ -20,16 +21,18 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
-            'role' => 'required|integer',
+            'role_id' => 'required|integer',
             'password' => 'required|string|confirmed'
         ]);
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
-            'role' => $request->role,
             'password' => bcrypt($request->password)
         ]);
         $user->save();
+
+        $user->roles()->attach($request->role_id);
+
         return response()->json([
             'message' => 'Successfully created user!'
         ], 201);
