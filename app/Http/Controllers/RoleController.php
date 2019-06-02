@@ -14,6 +14,10 @@ class RoleController extends Controller
         $role->name = $request->name();
 
         $role->save();
+
+        return response()->json([
+            'message' => 'Successfully created role!'
+        ], 201);
     }
 
     public function update(Request $request, $id)
@@ -23,10 +27,18 @@ class RoleController extends Controller
         $role->name = $request->name();
 
         $role->update();
+
+        return response()->json([
+            'message' => 'Successfully updated role!'
+        ], 201);
     }
 
     public function list()
     {
         $roles = Role::all();
+
+        return response()->json([
+            'roles' => $roles
+        ], 201);
     }
 }
