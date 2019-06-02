@@ -11,7 +11,7 @@ class TicketStatusController extends Controller
     {
         $ticketStatus = new TicketStatus();
 
-        $ticketStatus->name = $request->name();
+        $ticketStatus->name = $request->name;
 
         $ticketStatus->save();
     }
@@ -20,7 +20,7 @@ class TicketStatusController extends Controller
     {
         $ticketStatus = TicketStatus::find($id);
 
-        $ticketStatus->name = $request->name();
+        $ticketStatus->name = $request->name;
 
         $ticketStatus->update();
     }

@@ -11,7 +11,7 @@ class CommonAreaController extends Controller
     {
         $commonArea = new CommonArea();
 
-        $commonArea->name = $request->name();
+        $commonArea->name = $request->name;
 
         $commonArea->save();
 
@@ -24,7 +24,7 @@ class CommonAreaController extends Controller
     {
         $commonArea = CommonArea::find($id);
 
-        $commonArea->name = $request->name();
+        $commonArea->name = $request->name;
 
         $commonArea->update();
 

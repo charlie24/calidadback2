@@ -12,8 +12,8 @@ class GuestController extends Controller
     {
         $guest = new Guest();
 
-        $guest->name = $request->name();
-        $guest->dni = $request->dni();
+        $guest->name = $request->name;
+        $guest->dni = $request->dni;
 
         $guest->save();
     }
@@ -22,8 +22,8 @@ class GuestController extends Controller
     {
         $guest = Guest::find($id);
 
-        $guest->name = $request->name();
-        $guest->dni = $request->dni();
+        $guest->name = $request->name;
+        $guest->dni = $request->dni;
 
         $guest->update();
     }

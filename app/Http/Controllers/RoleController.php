@@ -11,7 +11,7 @@ class RoleController extends Controller
     {
         $role = new Role();
 
-        $role->name = $request->name();
+        $role->name = $request->name;
 
         $role->save();
 
@@ -24,7 +24,7 @@ class RoleController extends Controller
     {
         $role = Role::find($id);
 
-        $role->name = $request->name();
+        $role->name = $request->name;
 
         $role->update();
 
