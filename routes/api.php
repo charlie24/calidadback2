@@ -31,11 +31,11 @@ Route::group([
         Route::get('user', 'AuthController@user');
         //Roles
         Route::post('role/create','RoleController@create');
-        Route::get('role/update/{id}','RoleController@update');
+        Route::post('role/update/{id}','RoleController@update');
         Route::get('roles','RoleController@list');
         //Common Areas
         Route::post('commonArea/create','CommonAreaController@create');
-        Route::get('commonArea/update/{id}','CommonAreaController@update');
+        Route::post('commonArea/update/{id}','CommonAreaController@update');
         Route::get('commonAreas','CommonAreaController@list');
     });
 });
