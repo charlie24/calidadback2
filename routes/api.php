@@ -33,9 +33,31 @@ Route::group([
         Route::post('role/create','RoleController@create');
         Route::post('role/update/{id}','RoleController@update');
         Route::get('roles','RoleController@list');
+        Route::get('role/{id}','RoleController@role');
         //Common Areas
         Route::post('commonArea/create','CommonAreaController@create');
         Route::post('commonArea/update/{id}','CommonAreaController@update');
         Route::get('commonAreas','CommonAreaController@list');
+        Route::get('commonArea/{id}','CommonAreaController@commonArea');
+        //Reservations
+        Route::get('reservations','ReservationController@list');
+        Route::post('reserve','ReservationController@reserve');
+        Route::post('reservation/{id}/changeStatus','ReservationController@change_status');
+        Route::get('reservation/{id}','ReservationController@reservation');
+        //Tickets
+        Route::post('ticket/{id}/changeStatus','TicketController@changeStatus');
+        Route::post('ticket/create','TicketController@create');
+        Route::get('ticket/{id}','TicketController@ticket');
+        Route::get('tickets','TicketController@list');
+        //Invitations
+        Route::post('invitation/create','InvitationController@create');
+        Route::post('invitation/{id}/addGuest','InvitationController@addGuest');
+        Route::get('invitations','InvitationController@list');
+        Route::get('invitation','InvitationController@invitation');
+        //Ticket States
+        Route::post('ticketStatus/create','TicketStatusController@create');
+        Route::post('ticketStatus/update/{id}','TicketStatusController@update');
+        Route::get('ticketStates','TicketStatusController@list');
+        Route::get('ticketStatus/{id}','TicketStatusController@ticketStatus');
     });
 });

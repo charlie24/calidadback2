@@ -41,4 +41,13 @@ class CommonAreaController extends Controller
             'commonAreas' => $commonAreas
         ], 201);
     }
+
+    public function commonArea($id)
+    {
+        $commonArea = CommonArea::find($id);
+
+        return response()->json([
+            'commonArea' => $commonArea
+        ], 201);
+    }
 }

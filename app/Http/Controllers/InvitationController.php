@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use App\Invitation;
 use App\User;
 use App\Guest;
@@ -11,7 +12,23 @@ class InvitationController extends Controller
 {
     public function list()
     {
+        $invitationsCollection = collect([]);
         $invitations = Invitation::all();
+
+        foreach ($invitations as $invitation) {
+            $i = [
+                'id' => $invitation->id,
+                'invitation_date' => $invitation->invitation_date,
+                'status' => $invitation->status,
+                'user' => $invitation->user
+            ];
+
+            $invitationsCollection->push($i);
+        }
+        
+        return response()->json([
+            'invitations' => $invitationsCollection
+        ], 201);
     }
 
     public function create(Request $request)
@@ -28,6 +45,10 @@ class InvitationController extends Controller
         $guest->save();
 
         $guest->invitations()->attach($invitation->id);
+
+        return response()->json([
+            'message' => 'Successfully created invitation!'
+        ], 201);
     }
 
     public function addGuest(Request $request, $id)
@@ -40,5 +61,17 @@ class InvitationController extends Controller
 
         $guest->invitations()->attach($id);
 
+        return response()->json([
+            'message' => 'Successfully added guest!'
+        ], 201);
+    }
+
+    public function invitation($id)
+    {
+        $invitation = Invitation::find($id);
+
+        return response()->json([
+            'invitation' => $invitation
+        ], 201);
     }
 }

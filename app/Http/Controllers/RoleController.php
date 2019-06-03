@@ -41,4 +41,13 @@ class RoleController extends Controller
             'roles' => $roles
         ], 201);
     }
+
+    public function role($id)
+    {
+        $role = Role::find($id);
+
+        return response()->json([
+            'role' => $role
+        ], 201);
+    }
 }

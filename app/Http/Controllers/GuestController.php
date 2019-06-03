@@ -16,6 +16,10 @@ class GuestController extends Controller
         $guest->dni = $request->dni;
 
         $guest->save();
+
+        return response()->json([
+            'message' => 'Successfully created guest!'
+        ], 201);
     }
 
     public function update(Request $request, $id)
@@ -26,17 +30,36 @@ class GuestController extends Controller
         $guest->dni = $request->dni;
 
         $guest->update();
+
+        return response()->json([
+            'message' => 'Successfully updated guest!'
+        ], 201);
     }
 
     public function list()
     {
         $guests = Guest::all();
+
+        return response()->json([
+            'guests' => $guests
+        ], 201);
     }
 
     public function listByInvitation($id)
     {
         $invitation = Invitation::find($id);
 
-        $invitations->guests;
+        return response()->json([
+            'guests' => $invitations->guests
+        ], 201);
+    }
+
+    public function guest($id)
+    {
+        $guest = Guest::find($id);
+
+        return response()->json([
+            'guest' => $guest
+        ], 201);
     }
 }
