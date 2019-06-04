@@ -53,7 +53,7 @@ Route::group([
         Route::post('invitation/create','InvitationController@create');
         Route::post('invitation/{id}/addGuest','InvitationController@addGuest');
         Route::get('invitations','InvitationController@list');
-        Route::get('invitation','InvitationController@invitation');
+        Route::get('invitation/{id}','InvitationController@invitation');
         //Ticket States
         Route::post('ticketStatus/create','TicketStatusController@create');
         Route::post('ticketStatus/update/{id}','TicketStatusController@update');
