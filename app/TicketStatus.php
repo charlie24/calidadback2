@@ -8,6 +8,8 @@ class TicketStatus extends Model
 {
     protected $guarded = [];
 
+    protected $table = 'ticket_states';
+
     protected $hidden = [
         'created_at', 'updated_at',
     ];
