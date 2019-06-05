@@ -12,14 +12,23 @@ class InvitationController extends Controller
 {
     public function list()
     {
+        $role = $request->user()->roles[0]->id;
         $invitationsCollection = collect([]);
-        $invitations = Invitation::where('status',true)->get();
-
+        if( $role = 1)
+        {
+            $invitations = Invitation::where('status',true)->get();
+        }
+        else if ($role = 2)
+        {
+            $invitations = Invitation::where('status',true)->where('user_id',$request->user()->id)->get();
+        }
+        
         foreach ($invitations as $invitation) {
             $i = [
                 'id' => $invitation->id,
                 'invitation_date' => $invitation->invitation_date,
                 'status' => $invitation->status,
+                'guests' =>$invitation->guests,
                 'user' => $invitation->user
             ];
 

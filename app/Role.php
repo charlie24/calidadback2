@@ -9,7 +9,7 @@ class Role extends Model
     protected $guarded = [];
 
     protected $hidden = [
-        'created_at', 'updated_at',
+        'created_at', 'updated_at', 'pivot',
     ];
 
     public function users()
