@@ -50,7 +50,7 @@ class GuestController extends Controller
         $invitation = Invitation::find($id);
 
         return response()->json([
-            'guests' => $invitations->guests
+            'guests' => $invitation->guests
         ], 201);
     }
 
