@@ -36,7 +36,7 @@ class InvitationController extends Controller
         $invitation = new Invitation();
         $guest = new Guest();
 
-        $invitation->user_id = $request->user_id;
+        $invitation->user_id = $request->user()->id;
         $invitation->invitation_date = $request->invitation_date;
         $invitation->save();
 

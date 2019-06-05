@@ -37,7 +37,7 @@ class ReservationController extends Controller
         $reservation = new Reservation();
         $commonArea = CommonArea::find($request->common_area_id);
 
-        $reservation->user_id = $request->user_id;
+        $reservation->user_id = $request->user()->id;
         $reservation->common_area_id = $request->common_area_id;
         $reservation->reservation_start_date = $request->reservation_start_date;
         $reservation->reservation_end_date = $request->reservation_end_date;

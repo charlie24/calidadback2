@@ -14,7 +14,7 @@ class TicketController extends Controller
     {
         $ticket = new Ticket();
 
-        $ticket->user_id = $request->user_id;
+        $ticket->user_id = $request->user()->id;
         $ticket->ticket_status_id = $request->ticket_status_id;
         $ticket->message = $request->message;
 
