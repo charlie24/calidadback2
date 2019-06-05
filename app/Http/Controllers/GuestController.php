@@ -54,7 +54,7 @@ class GuestController extends Controller
         ], 201);
     }
 
-    public function guest($id)
+    public function changeStatus($id)
     {
         $guest = Guest::find($id);
 

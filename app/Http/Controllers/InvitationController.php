@@ -13,7 +13,7 @@ class InvitationController extends Controller
     public function list()
     {
         $invitationsCollection = collect([]);
-        $invitations = Invitation::all();
+        $invitations = Invitation::where('status',true)->get();
 
         foreach ($invitations as $invitation) {
             $i = [
@@ -72,6 +72,19 @@ class InvitationController extends Controller
 
         return response()->json([
             'invitation' => $invitation
+        ], 201);
+    }
+
+    public function changeStatus($id)
+    {
+        $invitation = Invitation::find($id);
+
+        $invitation->status = false;
+
+        $invitation->update();
+
+        return response()->json([
+            'message' => 'Successfully updated invitation!'
         ], 201);
     }
 }

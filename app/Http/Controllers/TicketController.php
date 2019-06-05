@@ -33,7 +33,7 @@ class TicketController extends Controller
         $ticket->update();
 
         return response()->json([
-            'message' => 'Successfully created ticket!'
+            'message' => 'Successfully updated ticket!'
         ], 201);
     }
 

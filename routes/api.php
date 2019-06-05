@@ -50,10 +50,17 @@ Route::group([
         Route::get('ticket/{id}','TicketController@ticket');
         Route::get('tickets','TicketController@list');
         //Invitations
+        Route::post('invitation/{id}/changeStatus','InvitationController@changeStatus');
+        Route::get('invitation/{id}/guests','GuestController@listByInvitation');
         Route::post('invitation/create','InvitationController@create');
         Route::post('invitation/{id}/addGuest','InvitationController@addGuest');
         Route::get('invitations','InvitationController@list');
         Route::get('invitation/{id}','InvitationController@invitation');
+        //Guests
+        Route::post('guest/create','GuestController@create');
+        Route::post('guest/update/{id}','GuestController@update');
+        //Route::get('guests','GuestController@list')
+        Route::get('guest/{id}','GuestController@guest');
         //Ticket States
         Route::post('ticketStatus/create','TicketStatusController@create');
         Route::post('ticketStatus/update/{id}','TicketStatusController@update');
