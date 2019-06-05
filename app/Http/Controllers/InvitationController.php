@@ -14,11 +14,11 @@ class InvitationController extends Controller
     {
         $role = $request->user()->roles[0]->id;
         $invitationsCollection = collect([]);
-        if( $role = 1)
+        if( $role == 1)
         {
             $invitations = Invitation::where('status',true)->get();
         }
-        else if ($role = 2)
+        else if ($role == 2)
         {
             $invitations = Invitation::where('status',true)->where('user_id',$request->user()->id)->get();
         }
