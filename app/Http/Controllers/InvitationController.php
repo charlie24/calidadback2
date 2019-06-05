@@ -10,7 +10,7 @@ use App\Guest;
 
 class InvitationController extends Controller
 {
-    public function list()
+    public function list(Request $request)
     {
         $role = $request->user()->roles[0]->id;
         $invitationsCollection = collect([]);
