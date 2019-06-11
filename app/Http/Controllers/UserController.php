@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\Resident;
 use App\User;
 
+define('RESIDENT_ROLE_ID', 3);
+
 class UserController extends Controller
 {
-    const RESIDENT_ROLE_ID = 3;
-
     public function createResident(Request $request)
     {
         $request->validate([
