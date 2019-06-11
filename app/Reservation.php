@@ -8,17 +8,18 @@ class Reservation extends Model
 {
     protected $guarded = [];
 
-    protected $hidden = [
-        'created_at', 'updated_at',
-    ];
-
     public function commonArea()
     {
         return $this->belongsTo('App\CommonArea');
     }
 
-    public function user()
+    public function resident()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Resident');
+    }
+
+    public function events()
+    {
+        return $this->hasMany('App\Event');
     }
 }

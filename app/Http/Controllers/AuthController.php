@@ -95,12 +95,49 @@ class AuthController extends Controller
      */
     public function user(Request $request)
     {
-        return response()->json([
-            'user_id' => $request->user()->id,
-            'name' => $request->user()->name,
-            'email' => $request->user()->email,
-            'role_id' => $request->user()->roles[0]->id,
-            'role_name' => $request->user()->roles[0]->name
-            ]);
+        $user = $request->user();
+
+        switch ($user->role_id) {
+            case 1:
+
+            return response()->json([
+                'user_id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role_id' => $user->role->id,
+                'role_name' => $user->role->name
+                ]);
+            
+            case 2:
+            
+            return response()->json([
+                'user_id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role_id' => $user->role->id,
+                'role_name' => $user->role->name
+                ]);
+            
+            case 3:
+            
+            return response()->json([
+                'user_id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role_id' => $user->role->id,
+                'role_name' => $user->role->name
+                ]);
+
+            case 4:
+            
+            return response()->json([
+                'user_id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role_id' => $user->role->id,
+                'role_name' => $user->role->name
+                ]);
+
+        }
     }
 }

@@ -17,8 +17,10 @@ class CreateCommonAreasTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->boolean('available')->default(true);
+
             $table->unsignedBigInteger('edifice_id');
             $table->foreign('edifice_id')->references('id')->on('edifices');
+            
             $table->timestamps();
         });
     }

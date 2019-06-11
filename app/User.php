@@ -26,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'pivot',
+        'password', 'remember_token',
     ];
 
     /**
@@ -38,23 +38,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function roles()
+    public function role()
     {
-        return $this->belongsToMany('App\Role');
+        return $this->belongsTo('App\Role');
     }
 
-    public function reservations()
+    public function edifice()
     {
-        return $this->hasMany('App\Reservation');
+        return $this->belongsTo('App\Edifice');
+    }
+
+    public function residents()
+    {
+        return $this->hasMany('App\Resident');
     }
 
     public function tickets()
     {
-        return $this->hasMany('App\Ticket');
-    }
-
-    public function invitations()
-    {
-        return $this->hasMany('App\Invitation');
+        return $this->belongsToMany('App\Ticket','comments');
     }
 }

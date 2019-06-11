@@ -8,17 +8,13 @@ class Invitation extends Model
 {
     protected $guarded = [];
 
-    protected $hidden = [
-        'created_at', 'updated_at', 'pivot',
-    ];
-
-    public function user()
+    public function resident()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Resident');
     }
 
-    public function guests()
+    public function event()
     {
-        return $this->belongsToMany('App\Guest');
+        return $this->belongsTo('App\Event');
     }
 }

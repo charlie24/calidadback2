@@ -8,12 +8,13 @@ class CommonArea extends Model
 {
     protected $guarded = [];
 
-    protected $hidden = [
-        'created_at', 'updated_at',
-    ];
-
     public function reservations()
     {
         return $this->hasMany('App\Reservation');
+    }
+
+    public function edifice()
+    {
+        return $this->belongsTo('App\Edifice');
     }
 }

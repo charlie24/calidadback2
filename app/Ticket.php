@@ -8,17 +8,23 @@ class Ticket extends Model
 {
     protected $guarded = [];
 
-    protected $hidden = [
-        'created_at', 'updated_at',
-    ];
-
     public function ticketStatus()
     {
         return $this->belongsTo('App\TicketStatus');
     }
 
-    public function user()
+    public function ticketCategory()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\TicketCategory');
+    }
+
+    public function resident()
+    {
+        return $this->belongsTo('App\Resident');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany('App\User','comments');
     }
 }
