@@ -32,7 +32,7 @@ class UserController extends Controller
             
                 $user->save();
             
-                $resident->user_id = $user->user_id;
+                $resident->user_id = $user->id;
                 $resident->department_id = $request->department_id;
                 $resident->save();
                 break;
@@ -46,8 +46,8 @@ class UserController extends Controller
             
                 $user->save();
             
-                $resident->user_id = $user->user_id;
-                $resident->department_id = $auth->department_id;
+                $resident->user_id = $user->id;
+                $resident->department_id = $request->department_id;
                 $resident->save();
                 break;
 
