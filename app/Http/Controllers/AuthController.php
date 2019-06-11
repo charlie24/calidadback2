@@ -99,44 +99,40 @@ class AuthController extends Controller
 
         switch ($user->role_id) {
             case 1:
-
-            return response()->json([
+                return response()->json([
                 'user_id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
                 'role_id' => $user->role->id,
                 'role_name' => $user->role->name
-                ]);
+                ], 200);
             
-            case 2:
-            
-            return response()->json([
+            case 2:    
+                return response()->json([
                 'user_id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
                 'role_id' => $user->role->id,
                 'role_name' => $user->role->name
-                ]);
+                ], 200);
             
-            case 3:
-            
-            return response()->json([
+            case 3:   
+                return response()->json([
                 'user_id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
                 'role_id' => $user->role->id,
                 'role_name' => $user->role->name
-                ]);
+                ], 200);
 
             case 4:
-            
-            return response()->json([
+                return response()->json([
                 'user_id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
                 'role_id' => $user->role->id,
                 'role_name' => $user->role->name
-                ]);
+                ], 200);
 
         }
     }

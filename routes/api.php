@@ -29,6 +29,8 @@ Route::group([
         //Users
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
+        //Residents
+        Route::post('resident/create','UserController@createResident');
         //Roles
         Route::post('role/create','RoleController@create');
         Route::post('role/update/{id}','RoleController@update');
