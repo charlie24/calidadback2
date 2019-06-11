@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRoleUserTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,18 @@ class CreateRoleUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('role_user', function (Blueprint $table) {
-            $table->unsignedBigInteger('role_id');
+        Schema::create('comments', function (Blueprint $table) {
+            $table->unsignedBigInteger('ticket_id');
             $table->unsignedBigInteger('user_id');
             
-            $table->primary(['role_id','user_id']);
+            $table->primary(['ticket_id','user_id']);
 
-            $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('ticket_id')->references('id')->on('tickets');
             $table->foreign('user_id')->references('id')->on('users');
+
+            $table->string('message');
+
+            $table->timestamps();
         });
     }
 
@@ -31,6 +35,6 @@ class CreateRoleUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('role_user');
+        Schema::dropIfExists('comments');
     }
 }

@@ -15,12 +15,20 @@ class CreateInvitationsTable extends Migration
     {
         Schema::create('invitations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->datetime('invitation_date');
-            $table->boolean('status')->default(true);
+            $table->unsignedBigInteger('resident_id');
+            $table->BigInteger('event_id')->nullable()->unsigned();
+            $table->string('name');
+            $table->string('email');
+            $table->string('dni');
+            $table->string('comment');
+            $table->dateTime('invitation_start_date');
+            $table->dateTime('invitation_end_date');
+            $table->boolean('check')->nullable();
+            $table->boolean('regular_visitor');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('resident_id')->references('id')->on('residents');
+            $table->foreign('event_id')->references('id')->on('events');
         });
     }
 

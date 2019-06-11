@@ -15,7 +15,7 @@ class CreateReservationsTable extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('resident_id');
             $table->unsignedBigInteger('common_area_id');
             $table->dateTime('reservation_start_date');
             $table->dateTime('reservation_end_date');
@@ -24,7 +24,7 @@ class CreateReservationsTable extends Migration
             $table->timestamps();
 
             $table->foreign('common_area_id')->references('id')->on('common_areas');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('resident_id')->references('id')->on('residents');
         });
     }
 

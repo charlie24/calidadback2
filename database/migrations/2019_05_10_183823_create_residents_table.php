@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCommonAreasTable extends Migration
+class CreateResidentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateCommonAreasTable extends Migration
      */
     public function up()
     {
-        Schema::create('common_areas', function (Blueprint $table) {
+        Schema::create('residents', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->boolean('available')->default(true);
-            $table->unsignedBigInteger('edifice_id');
-            $table->foreign('edifice_id')->references('id')->on('edifices');
+            $table->unsignedBigInteger('deparatment_id');
+
             $table->timestamps();
+            $table->foreign('deparatment_id')->references('id')->on('edifices');
         });
     }
 
@@ -30,6 +29,6 @@ class CreateCommonAreasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('common_areas');
+        Schema::dropIfExists('residents');
     }
 }
