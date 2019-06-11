@@ -47,7 +47,7 @@ class UserController extends Controller
                 $user->save();
             
                 $resident->user_id = $user->user_id;
-                $resident->department_id = $request->department_id;
+                $resident->department_id = $auth->department_id;
                 $resident->save();
                 break;
 
@@ -56,7 +56,7 @@ class UserController extends Controller
 
         }
 
-        
+        return response()->json([ 'message' => 'Successfully created'], 201);
 
     }
 }
