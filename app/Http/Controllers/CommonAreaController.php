@@ -12,6 +12,7 @@ class CommonAreaController extends Controller
         $commonArea = new CommonArea();
 
         $commonArea->name = $request->name;
+        $commonArea->edifice_id = $request->edifice_id;
 
         $commonArea->save();
 

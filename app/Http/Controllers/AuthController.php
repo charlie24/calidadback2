@@ -5,6 +5,12 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\User;
 use App\Role;
+
+define('SUPERADMIN_ROLE_ID', 1);
+define('ADMINISTRADOR_ID', 2);
+define('RESIDENTE_ID', 3);
+define('RECEPCIONISTA_ID', 4);
+
 class AuthController extends Controller
 {
     /**
@@ -98,7 +104,8 @@ class AuthController extends Controller
         $user = $request->user();
 
         switch ($user->role_id) {
-            case 1:
+
+            case SUPERADMIN_ROLE_ID:
                 return response()->json([
                 'user_id' => $user->id,
                 'name' => $user->name,
@@ -107,7 +114,7 @@ class AuthController extends Controller
                 'role_name' => $user->role->name
                 ], 200);
             
-            case 2:    
+            case ADMINISTRADOR_ID:    
                 return response()->json([
                 'user_id' => $user->id,
                 'name' => $user->name,
@@ -116,7 +123,7 @@ class AuthController extends Controller
                 'role_name' => $user->role->name
                 ], 200);
             
-            case 3:   
+            case RESIDENTE_ID:   
                 return response()->json([
                 'user_id' => $user->id,
                 'name' => $user->name,
@@ -125,7 +132,7 @@ class AuthController extends Controller
                 'role_name' => $user->role->name
                 ], 200);
 
-            case 4:
+            case RECEPCIONISTA_ID:
                 return response()->json([
                 'user_id' => $user->id,
                 'name' => $user->name,
