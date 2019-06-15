@@ -11,7 +11,7 @@ class InvitationController extends Controller
 {
     public function list(Request $request)
     {
-        $role = $request->user()->roles[0]->id;
+        $role = $request->user()->role->id;
         $invitationsCollection = collect([]);
         if( $role == 1)
         {
