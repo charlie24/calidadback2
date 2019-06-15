@@ -11,7 +11,8 @@ class InvitationController extends Controller
 {
     public function list(Request $request)
     {
-        $role = $request->user()->role->id;
+        $user = $request->user();
+        $role = $user->role->id;
         $invitationsCollection = collect([]);
         if( $role == 1)
         {
@@ -21,7 +22,12 @@ class InvitationController extends Controller
         {
             $invitations = Invitation::where('status',true)->where('user_id',$request->user()->id)->get();
         }
-        
+
+        else if($role == 3)
+        {
+            $invitations = Invitation::where('status', true)->where('resident_id',$user->residents[0]->id)->get();
+        }
+
         foreach ($invitations as $invitation) {
             $i = [
                 'id' => $invitation->id,
