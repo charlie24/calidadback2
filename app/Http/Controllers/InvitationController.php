@@ -47,9 +47,10 @@ class InvitationController extends Controller
 
     public function create(Request $request)
     {
+        $user = $request->user();
         $invitation = new Invitation();
 
-        $invitation->user_id = $request->user()->id;
+        $invitation->user_id = $user->id;
         $invitation->resident_id = $request->resident_id;
 
         if($request->event_id != null)
@@ -61,8 +62,7 @@ class InvitationController extends Controller
         $invitation->email = $request->email;
         $invitation->dni = $request->dni;
         $invitation->comment = $request->comment;
-        $invitation->invitation_start_date = $request->invitation_start_date;
-        $invitation->invitation_end_date = $request->invitation_end_date;
+        $invitation->invitation_date = $request->invitation_date;
         $invitation->check = $request->check;
         $invitation->regular_visitor = $request->regular_visitor;
 
