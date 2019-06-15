@@ -16,16 +16,16 @@ class InvitationController extends Controller
         $invitationsCollection = collect([]);
         if( $role == 1)
         {
-            $invitations = Invitation::where('status',true)->get();
+            $invitations = Invitation::get();
         }
         else if ($role == 2)
         {
-            $invitations = Invitation::where('status',true)->where('user_id',$request->user()->id)->get();
+            $invitations = Invitation::where('user_id',$request->user()->id)->get();
         }
 
         else if($role == 3)
         {
-            $invitations = Invitation::where('status', true)->where('resident_id',$user->residents[0]->id)->get();
+            $invitations = Invitation::where('resident_id',$user->residents[0]->id)->get();
         }
 
         foreach ($invitations as $invitation) {
