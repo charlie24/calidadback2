@@ -34,22 +34,32 @@ class ReservationController extends Controller
 
     public function reserve(Request $request)
     {
-        $reservation = new Reservation();
-        $commonArea = CommonArea::find($request->common_area_id);
+        if($request->user()->role_id == 3)
+        {
+            $user = $request->user();
+            $reservation = new Reservation();
+            $commonArea = CommonArea::find($request->common_area_id);
 
-        $reservation->user_id = $request->user()->id;
-        $reservation->common_area_id = $request->common_area_id;
-        $reservation->reservation_start_date = $request->reservation_start_date;
-        $reservation->reservation_end_date = $request->reservation_end_date;
+            $reservation->resident_id = $user->residents->first()->id;
+            $reservation->common_area_id = $request->common_area_id;
+            $reservation->reservation_start_date = $request->reservation_start_date;
+            $reservation->reservation_end_date = $request->reservation_end_date;
 
-        $commonArea->available = false;
+            $commonArea->available = false;
 
-        $reservation->save();
-        $commonArea->update();
+            $reservation->save();
+            $commonArea->update();
 
-        return response()->json([
-            'message' => 'Successfully created reservation!'
-        ], 201);
+            return response()->json([
+                'message' => 'Successfully created reservation!'
+            ], 201);                
+        }
+        else{
+            return response()->json([
+                'message' => 'Only one resident can make a reservation'
+            ], 401);   
+        }
+
     }
 
     public function change_status($id)

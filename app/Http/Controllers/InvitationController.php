@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use App\Invitation;
 use App\User;
-use App\Guest;
 
 class InvitationController extends Controller
 {
@@ -43,35 +42,28 @@ class InvitationController extends Controller
     public function create(Request $request)
     {
         $invitation = new Invitation();
-        $guest = new Guest();
 
         $invitation->user_id = $request->user()->id;
-        $invitation->invitation_date = $request->invitation_date;
+        $invitation->resident_id = $request->resident_id;
+
+        if($request->event_id != null)
+        {
+            $invitation->event_id = $request->event_id;
+        }
+
+        $invitation->name = $request->name;
+        $invitation->email = $request->email;
+        $invitation->dni = $request->dni;
+        $invitation->comment = $request->comment;
+        $invitation->invitation_start_date = $request->invitation_start_date;
+        $invitation->invitation_end_date = $request->invitation_end_date;
+        $invitation->check = $request->check;
+        $invitation->regular_visitor = $request->regular_visitor;
+
         $invitation->save();
-
-        $guest->name = $request->name;
-        $guest->dni = $request->dni;
-        $guest->save();
-
-        $guest->invitations()->attach($invitation->id);
 
         return response()->json([
             'message' => 'Successfully created invitation!'
-        ], 201);
-    }
-
-    public function addGuest(Request $request, $id)
-    {
-        $guest = new Guest();
-
-        $guest->name = $request->name;
-        $guest->dni = $request->dni;
-        $guest->save();
-
-        $guest->invitations()->attach($id);
-
-        return response()->json([
-            'message' => 'Successfully added guest!'
         ], 201);
     }
 

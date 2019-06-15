@@ -17,4 +17,9 @@ class Edifice extends Model
     {
         return $this->hasMany('App\CommonArea');
     }
+
+    public function departments()
+    {
+        return $this->hasMany('App\Department');
+    }
 }
