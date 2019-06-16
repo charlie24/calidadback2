@@ -6,23 +6,58 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use App\Ticket;
 use App\TicketStatus;
+use App\TicketCategory;
 use App\User;
 
 class TicketController extends Controller
 {
     public function create(Request $request)
     {
+        $user = $request->user();
         $ticket = new Ticket();
 
-        $ticket->user_id = $request->user()->id;
-        $ticket->ticket_status_id = $request->ticket_status_id;
-        $ticket->message = $request->message;
+        if($user->role_id == 3)
+        {
+            $ticket->resident_id = $user->residents[0]->id;
+            $ticket->ticket_status_id = $request->ticket_status_id;
+            $ticket->ticket_category_id = $request->ticket_category_id;
+            $ticket->message = $request->message;
+    
+            $ticket->save();
+    
+            return response()->json([
+                'message' => 'Successfully created ticket!'
+            ], 201);
+        }else
+        {
+            return response()->json([
+                'message' => 'Only one resident can make a ticket'
+            ], 401);
+        }
+    }
 
-        $ticket->save();
+    public function update(Request $request, $id)
+    {
+        $user = $request->user();
+        $ticket = Ticket::find($id);
 
-        return response()->json([
-            'message' => 'Successfully created ticket!'
-        ], 201);
+        if($user->role_id == 3)
+        {
+            $ticket->ticket_status_id = $request->ticket_status_id;
+            $ticket->ticket_category_id = $request->ticket_category_id;
+            $ticket->message = $request->message;
+    
+            $ticket->save();
+    
+            return response()->json([
+                'message' => 'Successfully created ticket!'
+            ], 201);
+        }else
+        {
+            return response()->json([
+                'message' => 'Only one resident can make a ticket'
+            ], 401);
+        }
     }
 
     public function changeStatus(Request $request, $id)

@@ -30,9 +30,19 @@ class AuthController extends Controller
             'role_id' => 'required|integer',
             'password' => 'required|string|confirmed'
         ]);
+
+        if($request->role_id == 3)
+        {
+            return response()->json([
+                'message' => 'Error'
+            ], 201);
+        }
+
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
+            'role_id' => $request->role_id,
+            'edifice_id' => $request->edifice_id,
             'password' => bcrypt($request->password)
         ]);
         $user->save();

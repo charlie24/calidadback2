@@ -98,12 +98,7 @@ class InvitationController extends Controller
         if($user->role_id == 3)
         {
             $invitation->resident_id = $user->residents[0]->id;
-
-            if($request->event_id != null)
-            {
-                $invitation->event_id = $request->event_id;
-            }
-    
+            $invitation->event_id = $request->event_id;
             $invitation->name = $request->name;
             $invitation->email = $request->email;
             $invitation->dni = $request->dni;
