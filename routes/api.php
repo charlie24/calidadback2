@@ -58,6 +58,7 @@ Route::group([
         Route::post('invitation/{id}/addGuest','InvitationController@addGuest');
         Route::get('invitations','InvitationController@list');
         Route::get('invitation/{id}','InvitationController@invitation');
+        Route::post('invitation/update/{id}','InvitationController@update');
         //Guests
         Route::post('guest/create','GuestController@create');
         Route::post('guest/update/{id}','GuestController@update');

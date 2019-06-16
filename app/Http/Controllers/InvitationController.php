@@ -121,7 +121,7 @@ class InvitationController extends Controller
         else
         {
             return response()->json([
-                'message' => 'Only one resident can make a invitation'
+                'message' => 'Only one resident can make an invitation'
             ], 401);
         }
     }
@@ -135,16 +135,46 @@ class InvitationController extends Controller
         ], 201);
     }
 
-    public function changeStatus($id)
+    public function changeStatus(Request $request,$id)
     {
         $invitation = Invitation::find($id);
 
-        $invitation->status = false;
+        $invitation->check = $request->check;
 
         $invitation->update();
 
         return response()->json([
             'message' => 'Successfully updated invitation!'
         ], 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = $request->user();
+        $invitation = Invitation::find($id);
+
+        if($user->role_id == 3)
+        {
+            $invitation->event_id = $request->event_id;
+            $invitation->name = $request->name;
+            $invitation->email = $request->email;
+            $invitation->dni = $request->dni;
+            $invitation->comment = $request->comment;
+            $invitation->invitation_date = $request->invitation_date;
+            $invitation->check = $request->check;
+            $invitation->regular_visitor = $request->regular_visitor;
+    
+            $invitation->save();
+    
+            return response()->json([
+                'message' => 'Successfully created invitation!'
+            ], 201);
+        }
+        else
+        {
+            return response()->json([
+                'message' => 'Only one resident can update an invitation'
+            ], 401);
+        }
     }
 }
