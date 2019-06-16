@@ -16,35 +16,73 @@ class InvitationController extends Controller
         $invitationsCollection = collect([]);
         if( $role == 1)
         {
-            $invitations = Invitation::get();
+            foreach ($invitations as $invitation) {
+                $i = [
+                    'id' => $invitation->id,
+                    'name' => $invitation->name,
+                    'dni' => $invitation->dni,
+                    'email' => $invitation->email,
+                    'comment' => $invitation->comment,
+                    'invitation_date' => $invitation->invitation_date,
+                    'check' => $invitation->check,
+                    'regular_visitor' => $invitation->regular_visitor,
+                    'event_id' => $invitation->event_id,
+                    'resident_id' => $invitation->resident_id,
+                    'resident_name' => $invitation->resident->user->name
+                ];
+    
+                $invitationsCollection->push($i);
+            }
         }
-        else if ($role == 2)
+        else if ($role == 2 and $role == 4)
         {
-            $invitations = Invitation::where('user_id',$request->user()->id)->get();
+            $users = User::where('edifice_id', $user->edifice->id)->get();
+
+            $residents = Resident::whereIn('user_id', $users->pluck('id'))->get();
+
+            $invitations = Invitation::whereIn('resident_id',$residents->pluck('id'))->get();
+
+            foreach ($invitations as $invitation) {
+                $i = [
+                    'id' => $invitation->id,
+                    'name' => $invitation->name,
+                    'dni' => $invitation->dni,
+                    'email' => $invitation->email,
+                    'comment' => $invitation->comment,
+                    'invitation_date' => $invitation->invitation_date,
+                    'check' => $invitation->check,
+                    'regular_visitor' => $invitation->regular_visitor,
+                    'event_id' => $invitation->event_id,
+                    'resident_id' => $invitation->resident_id,
+                    'resident_name' => $invitation->resident->user->name
+                ];
+    
+                $invitationsCollection->push($i);
+            }
         }
 
         else if($role == 3)
         {
             $invitations = Invitation::where('resident_id',$user->residents[0]->id)->get();
+
+            foreach ($invitations as $invitation) {
+                $i = [
+                    'id' => $invitation->id,
+                    'name' => $invitation->name,
+                    'dni' => $invitation->dni,
+                    'email' => $invitation->email,
+                    'comment' => $invitation->comment,
+                    'invitation_date' => $invitation->invitation_date,
+                    'check' => $invitation->check,
+                    'regular_visitor' => $invitation->regular_visitor,
+                    'event_id' => $invitation->event_id,
+                    'resident_id' => $invitation->resident_id
+                ];
+    
+                $invitationsCollection->push($i);
+            }
         }
 
-        foreach ($invitations as $invitation) {
-            $i = [
-                'id' => $invitation->id,
-                'name' => $invitation->name,
-                'dni' => $invitation->dni,
-                'email' => $invitation->email,
-                'comment' => $invitation->comment,
-                'invitation_date' => $invitation->invitation_date,
-                'check' => $invitation->check,
-                'regular_visitor' => $invitation->regular_visitor,
-                'event_id' => $invitation->event_id,
-                'resident_id' => $invitation->resident_id
-            ];
-
-            $invitationsCollection->push($i);
-        }
-        
         return response()->json([
             'invitations' => $invitationsCollection
         ], 201);
