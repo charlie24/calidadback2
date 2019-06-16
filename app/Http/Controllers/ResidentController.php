@@ -14,9 +14,23 @@ class ResidentController extends Controller
     {
         $user = $request->user();
 
-        $edifice = Edifice::find($user->edifice_id);
+        $residents = Resident::where('department_id', $user->edifice_id)
+                            ->paginate($request->rowsPerPage);
 
-        $residents = Resident::whereIn('department_id',$edifice->departments->pluck('id'))->get();
+        $residentsCollection = collect([]);
 
+        foreach ($residents as $resident) {
+            $residentsCollection->push([
+                'id' => $resident->id,
+                'department' => $resident->department,
+                'user' => $resident->user,
+                'created_at' => $resident->created_at->format('Y-m-d H:i:s'),
+            ]);
+        }
+
+        return response()->json([
+            'residents' => $residentsCollection,
+            'total' => $residents->total()
+        ]);
     }
 }
