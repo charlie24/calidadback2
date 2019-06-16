@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use App\Invitation;
 use App\User;
+use App\Resident;
 
 class InvitationController extends Controller
 {
