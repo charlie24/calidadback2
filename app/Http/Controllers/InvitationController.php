@@ -14,6 +14,7 @@ class InvitationController extends Controller
         $user = $request->user();
         $role = $user->role->id;
         $invitationsCollection = collect([]);
+
         if( $role == 1)
         {
             foreach ($invitations as $invitation) {
@@ -34,7 +35,7 @@ class InvitationController extends Controller
                 $invitationsCollection->push($i);
             }
         }
-        else if ($role == 2 and $role == 4)
+        else if ($role == 2 || $role == 4)
         {
             $users = User::where('edifice_id', $user->edifice->id)->get();
 
