@@ -8,6 +8,7 @@ use App\Ticket;
 use App\TicketStatus;
 use App\TicketCategory;
 use App\User;
+use App\Comment;
 use Illuminate\Support\Facades\Log;
 
 class TicketController extends Controller
@@ -104,9 +105,28 @@ class TicketController extends Controller
     public function ticket($id)
     {
         $ticket = Ticket::find($id);
-        
+        $commentsCollection = collect([]);
+        $comments = Comment::where('ticket_id',$id)->get();
+
+        foreach ($comments as $comment) {
+            $c = [
+                'ticket_id' => $comment->ticket_id,
+                'message' => $comment->message,
+                'user' => $comment->user,
+                'created_at' => $comment->created_at->format('Y-m-d H:i:s')
+            ];
+
+            $commentsCollection->push($c);
+        }
+
         return response()->json([
-            'ticket' => $ticket
+            'id' => $ticket->id,
+            'message' => $ticket->message,
+            'user' => $ticket->resident->user,
+            'status' => $ticket->ticketStatus,
+            'category' => $ticket->ticketCategory,
+            'created_at' => $ticket->created_at,
+            'comments' => $commentsCollection
         ], 201);
     }
 }

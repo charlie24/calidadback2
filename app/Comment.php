@@ -9,4 +9,9 @@ class Comment extends Model
     protected $guarded = [];
     protected $primaryKey = ['user_id', 'ticket_id'];
     public $incrementing = false;
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }
