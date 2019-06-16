@@ -30,6 +30,7 @@ Route::group([
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
         //Residents
+        Route::get('residents', 'ResidentController@list');
         Route::post('resident/create','UserController@createResident');
         //Roles
         Route::post('role/create','RoleController@create');
