@@ -22,9 +22,9 @@ class CommentController extends Controller
         return response()->json([ 'message' => 'Successfully created'], 201);
     }
 
-    public function list(Request $request)
+    public function listByTicket(Request $request,$id)
     {
-        $comments = Comment::where('ticket_id')->get();
+        $comments = Comment::where('ticket_id',$id)->get();
 
         return response()->json([ 'comments' => $comments], 201);
     }

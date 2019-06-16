@@ -51,6 +51,9 @@ Route::group([
         Route::post('ticket/create','TicketController@create');
         Route::get('ticket/{id}','TicketController@ticket');
         Route::get('tickets','TicketController@list');
+        //Comments
+        Route::post('comment/create','CommentController@create');
+        Route::get('comments/{id}','CommentController@listByTicket');
         //Invitations
         Route::post('invitation/{id}/changeStatus','InvitationController@changeStatus');
         Route::get('invitation/{id}/guests','GuestController@listByInvitation');
