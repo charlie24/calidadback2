@@ -34,10 +34,19 @@ class CommonAreaController extends Controller
         ], 201);
     }
 
-    public function list()
+    public function list(Request $request)
     {
-        $commonAreas = CommonArea::all();
+        $user = $request->user();
 
+        if($user->role_id == 1)
+        {
+            $commonAreas = CommonArea::all();
+        }
+        else
+        {
+            $commonAreas = CommonArea::where('edifice_id', $user->edifice_id)->get();
+        }
+        
         return response()->json([
             'commonAreas' => $commonAreas
         ], 201);
@@ -50,5 +59,10 @@ class CommonAreaController extends Controller
         return response()->json([
             'commonArea' => $commonArea
         ], 201);
+    }
+
+    public function delete($id)
+    {
+
     }
 }

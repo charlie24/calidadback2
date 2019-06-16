@@ -172,4 +172,14 @@ class InvitationController extends Controller
             ], 401);
         }
     }
+
+    public function search(Request $request)
+    {
+
+    }
+
+    public function delete($id)
+    {
+        
+    }
 }
