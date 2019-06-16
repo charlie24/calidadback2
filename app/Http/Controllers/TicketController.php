@@ -125,7 +125,7 @@ class TicketController extends Controller
             'user' => $ticket->resident->user,
             'status' => $ticket->ticketStatus,
             'category' => $ticket->ticketCategory,
-            'created_at' => $ticket->created_at,
+            'created_at' => $ticket->created_at->format('Y-m-d H:i:s'),
             'comments' => $commentsCollection
         ], 201);
     }
