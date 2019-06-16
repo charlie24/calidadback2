@@ -67,7 +67,7 @@ class InvitationController extends Controller
 
         else if($role == 3)
         {
-            $invitations = Invitation::where('resident_id',$user->residents[0]->id)->get();
+            $invitations = Invitation::where('resident_id',$user->resident->id)->get();
 
             foreach ($invitations as $invitation) {
                 $i = [
@@ -99,7 +99,7 @@ class InvitationController extends Controller
 
         if($user->role_id == 3)
         {
-            $invitation->resident_id = $user->residents[0]->id;
+            $invitation->resident_id = $user->resident->id;
             $invitation->event_id = $request->event_id;
             $invitation->name = $request->name;
             $invitation->email = $request->email;

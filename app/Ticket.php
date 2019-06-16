@@ -27,4 +27,9 @@ class Ticket extends Model
     {
         return $this->belongsToMany('App\User','comments');
     }
+
+    public function scopeSearch($query, $term) {
+        if (!$term) return $query;
+        return $query->whereRaw("LOWER(message) LIKE ? ", '%'.strtolower(trim($term)).'%');
+    }
 }

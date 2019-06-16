@@ -8,6 +8,7 @@ use App\Ticket;
 use App\TicketStatus;
 use App\TicketCategory;
 use App\User;
+use Illuminate\Support\Facades\Log;
 
 class TicketController extends Controller
 {
@@ -18,7 +19,7 @@ class TicketController extends Controller
 
         if($user->role_id == 3)
         {
-            $ticket->resident_id = $user->residents[0]->id;
+            $ticket->resident_id = $user->resident->id;
             $ticket->ticket_status_id = $request->ticket_status_id;
             $ticket->ticket_category_id = $request->ticket_category_id;
             $ticket->message = $request->message;
@@ -72,24 +73,31 @@ class TicketController extends Controller
         ], 201);
     }
 
-    public function list()
+    public function list(Request $request)
     {
         $ticketsCollection = collect([]);
-        $tickets = Ticket::all();
+        $user = $request->user();
+        $tickets = Ticket::when($user->role_id == 3, function($query) use($user) {
+                        return $query->where('resident_id', $user->resident->id);
+                    })
+                    ->search($request->search)
+                    ->paginate($request->rowsPerPage);
 
         foreach ($tickets as $ticket) {
             $t = [
                 'id' => $ticket->id,
                 'message' => $ticket->message,
-                'user' => $ticket->user,
-                'status' => $ticket->ticketStatus
+                'user' => $ticket->resident->user,
+                'status' => $ticket->ticketStatus,
+                'created_at' => $ticket->created_at->format('Y-m-d H:i:s')
             ];
 
             $ticketsCollection->push($t);
         }
         
         return response()->json([
-            'tickets' => $ticketsCollection
+            'tickets' => $ticketsCollection,
+            'total' => $tickets->total()
         ], 201);
     }
 
