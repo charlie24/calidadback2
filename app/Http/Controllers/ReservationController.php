@@ -12,21 +12,66 @@ class ReservationController extends Controller
 {
     public function list()
     {
+        $user = $request->user();
+        $role = $user->role->id;
         $reservationsCollection = collect([]);
         $reservations = Reservation::all();
 
-        foreach ($reservations as $reservation) {
-            $r = [
-                'id' => $reservation->id,
-                'reservation_start_date' => $reservation->reservation_start_date,
-                'reservation_end_date' => $reservation->reservation_end_date,
-                'user' => $reservation->user,
-                'commonArea' => $reservation->commonArea
-            ];
+        if( $role == 1)
+        {
+            $reservations = Reservation::all();
 
-            $reservationsCollection->push($r);
+            foreach ($reservations as $reservation) {
+                $r = [
+                    'id' => $reservation->id,
+                    'reservation_start_date' => $reservation->reservation_start_date,
+                    'reservation_end_date' => $reservation->reservation_end_date,
+                    'user' => $reservation->resident->user,
+                    'status' => $reservation->status,
+                    'commonArea' => $reservation->commonArea
+                ];
+    
+                $reservationsCollection->push($r);
+            }
         }
-        
+        else if ($role == 2 || $role == 4)
+        {
+            $users = User::where('edifice_id', $user->edifice->id)->get();
+
+            $residents = Resident::whereIn('user_id', $users->pluck('id'))->get();
+
+            foreach ($reservations as $reservation) {
+                $r = [
+                    'id' => $reservation->id,
+                    'reservation_start_date' => $reservation->reservation_start_date,
+                    'reservation_end_date' => $reservation->reservation_end_date,
+                    'user' => $reservation->resident->user,
+                    'status' => $reservation->status,
+                    'commonArea' => $reservation->commonArea
+                ];
+    
+                $reservationsCollection->push($r);
+            }
+        }
+
+        else if($role == 3)
+        {
+            $reservations = Reservation::where('resident_id',$user->resident->id)->get();
+
+            foreach ($reservations as $reservation) {
+                $r = [
+                    'id' => $reservation->id,
+                    'reservation_start_date' => $reservation->reservation_start_date,
+                    'reservation_end_date' => $reservation->reservation_end_date,
+                    'user' => $reservation->resident->user,
+                    'status' => $reservation->status,
+                    'commonArea' => $reservation->commonArea
+                ];
+    
+                $reservationsCollection->push($r);
+            }
+        }
+
         return response()->json([
             'reservations' => $reservationsCollection
         ], 201);
@@ -34,32 +79,33 @@ class ReservationController extends Controller
 
     public function reserve(Request $request)
     {
-        if($request->user()->role_id == 3)
-        {
-            $user = $request->user();
-            $reservation = new Reservation();
-            $commonArea = CommonArea::find($request->common_area_id);
 
-            $reservation->resident_id = $user->residents->first()->id;
+        $user = $request->user();
+        $reservation = new Reservation();
+        $commonArea = CommonArea::find($request->common_area_id);
+
+        if($user->role_id == 3)
+        {
+            $reservation->resident_id = $user->resident->id;
             $reservation->common_area_id = $request->common_area_id;
             $reservation->reservation_start_date = $request->reservation_start_date;
             $reservation->reservation_end_date = $request->reservation_end_date;
-
-            $commonArea->available = false;
-
+            
             $reservation->save();
-            $commonArea->update();
 
+            $commonArea->available = true;
+            $commonArea->update();
+    
             return response()->json([
                 'message' => 'Successfully created reservation!'
-            ], 201);                
+            ], 201);
         }
-        else{
+        else
+        {
             return response()->json([
                 'message' => 'Only one resident can make a reservation'
-            ], 401);   
+            ], 401);
         }
-
     }
 
     public function change_status($id)
@@ -87,4 +133,14 @@ class ReservationController extends Controller
             'reservation' => $reservation
         ], 201);
     }
+
+    public function delete($id)
+    {
+        $reservation = Reservation::where('id',$id)->delete();
+    
+        return response()->json([
+            'message' => 'Successfully deleted'
+        ], 201);
+    }
+    
 }
