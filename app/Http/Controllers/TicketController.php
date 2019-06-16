@@ -76,14 +76,20 @@ class TicketController extends Controller
     public function list(Request $request)
     {
         $ticketsCollection = collect([]);
-        $tickets = Ticket::search($request->search)->paginate($request->rowsPerPage);
+        $user = $request->user();
+        $tickets = Ticket::when($user->role_id == 3, function($query) use($user) {
+                        return $query->where('resident_id', $user->resident->id);
+                    })
+                    ->search($request->search)
+                    ->paginate($request->rowsPerPage);
 
         foreach ($tickets as $ticket) {
             $t = [
                 'id' => $ticket->id,
                 'message' => $ticket->message,
                 'user' => $ticket->user,
-                'status' => $ticket->ticketStatus
+                'status' => $ticket->ticketStatus,
+                'created_at' => $ticket->created_at->format('Y-m-d H:i:s')
             ];
 
             $ticketsCollection->push($t);

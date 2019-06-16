@@ -48,9 +48,9 @@ class User extends Authenticatable
         return $this->belongsTo('App\Edifice');
     }
 
-    public function residents()
+    public function resident()
     {
-        return $this->hasMany('App\Resident');
+        return $this->hasOne('App\Resident');
     }
 
     public function tickets()
