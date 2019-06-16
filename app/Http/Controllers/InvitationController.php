@@ -50,27 +50,37 @@ class InvitationController extends Controller
         $user = $request->user();
         $invitation = new Invitation();
 
-        $invitation->user_id = $user->id;
-        $invitation->resident_id = $request->resident_id;
-
-        if($request->event_id != null)
+        if($user->role_id == 3)
         {
-            $invitation->event_id = $request->event_id;
+            $invitation->resident_id = $user->residents[0]->id;
+
+            if($request->event_id != null)
+            {
+                $invitation->event_id = $request->event_id;
+            }
+    
+            $invitation->name = $request->name;
+            $invitation->email = $request->email;
+            $invitation->dni = $request->dni;
+            $invitation->comment = $request->comment;
+            $invitation->invitation_date = $request->invitation_date;
+            $invitation->check = $request->check;
+            $invitation->regular_visitor = $request->regular_visitor;
+    
+            $invitation->save();
+    
+            return response()->json([
+                'message' => 'Successfully created invitation!'
+            ], 201);
+        }
+        else
+        {
+            return response()->json([
+                'message' => 'Only one resident can make a invitation'
+            ], 401);
         }
 
-        $invitation->name = $request->name;
-        $invitation->email = $request->email;
-        $invitation->dni = $request->dni;
-        $invitation->comment = $request->comment;
-        $invitation->invitation_date = $request->invitation_date;
-        $invitation->check = $request->check;
-        $invitation->regular_visitor = $request->regular_visitor;
 
-        $invitation->save();
-
-        return response()->json([
-            'message' => 'Successfully created invitation!'
-        ], 201);
     }
 
     public function invitation($id)
