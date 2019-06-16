@@ -64,7 +64,7 @@ Route::group([
         Route::get('invitation/{id}','InvitationController@invitation');
         Route::post('invitation/update/{id}','InvitationController@update');
         Route::post('invitation/delete/{id}','InvitationController@delete');
-        Route::get('invitations/search','InvitationController@search');
+        Route::post('invitations/search','InvitationController@search');
         //Guests
         Route::post('guest/create','GuestController@create');
         Route::post('guest/update/{id}','GuestController@update');
