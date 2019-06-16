@@ -12,23 +12,27 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         DB::table('roles')->insert([
-            'name' => 'Administrador',
-        ],
-        [
-            'name' => 'Vecino' ,
+            [
+                'name' => 'Administrador',
+            ],
+            [
+                'name' => 'Vecino' ,
+            ]
         ]);
 
         DB::table('ticket_states')->insert([
-            'name' => 'Nuevo',
-        ],
-        [
-            'name' => 'En progreso' ,
-        ],
-        [
-            'name' => 'Resuelto',
-        ],
-        [
-            'name' => 'Cerrado',
+            [
+                'name' => 'Nuevo',
+            ],
+            [
+                'name' => 'En progreso' ,
+            ],
+            [
+                'name' => 'Resuelto',
+            ],
+            [
+                'name' => 'Cerrado',
+            ]
         ]);
     }
 }
