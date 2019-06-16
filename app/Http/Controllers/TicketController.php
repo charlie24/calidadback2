@@ -8,6 +8,7 @@ use App\Ticket;
 use App\TicketStatus;
 use App\TicketCategory;
 use App\User;
+use Illuminate\Support\Facades\Log;
 
 class TicketController extends Controller
 {
@@ -72,10 +73,10 @@ class TicketController extends Controller
         ], 201);
     }
 
-    public function list()
+    public function list(Request $request)
     {
         $ticketsCollection = collect([]);
-        $tickets = Ticket::all();
+        $tickets = Ticket::search($request->search)->paginate($request->rowsPerPage);
 
         foreach ($tickets as $ticket) {
             $t = [
@@ -89,7 +90,8 @@ class TicketController extends Controller
         }
         
         return response()->json([
-            'tickets' => $ticketsCollection
+            'tickets' => $ticketsCollection,
+            'total' => $tickets->total()
         ], 201);
     }
 
