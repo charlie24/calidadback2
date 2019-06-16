@@ -69,5 +69,7 @@ Route::group([
         Route::post('ticketStatus/update/{id}','TicketStatusController@update');
         Route::get('ticketStates','TicketStatusController@list');
         Route::get('ticketStatus/{id}','TicketStatusController@ticketStatus');
+        //Ticket Categories
+        Route::get('ticketCategories','TicketCategoryController@list');
     });
 });
