@@ -31,10 +31,15 @@ class InvitationController extends Controller
         foreach ($invitations as $invitation) {
             $i = [
                 'id' => $invitation->id,
+                'name' => $invitation->name,
+                'dni' => $invitation->dni,
+                'email' => $invitation->email,
+                'comment' => $invitation->comment,
                 'invitation_date' => $invitation->invitation_date,
-                'status' => $invitation->status,
-                'guests' =>$invitation->guests,
-                'user' => $invitation->user
+                'check' => $invitation->check,
+                'regular_visitor' => $invitation->regular_visitor,
+                'event_id' => $invitation->event_id,
+                'resident_id' => $invitation->resident_id
             ];
 
             $invitationsCollection->push($i);
@@ -79,8 +84,6 @@ class InvitationController extends Controller
                 'message' => 'Only one resident can make a invitation'
             ], 401);
         }
-
-
     }
 
     public function invitation($id)
