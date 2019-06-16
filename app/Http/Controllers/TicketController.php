@@ -81,6 +81,7 @@ class TicketController extends Controller
                         return $query->where('resident_id', $user->resident->id);
                     })
                     ->search($request->search)
+                    ->orderBy('updated_at', 'desc')
                     ->paginate($request->rowsPerPage);
 
         foreach ($tickets as $ticket) {
@@ -89,7 +90,9 @@ class TicketController extends Controller
                 'message' => $ticket->message,
                 'user' => $ticket->resident->user,
                 'status' => $ticket->ticketStatus,
-                'created_at' => $ticket->created_at->format('Y-m-d H:i:s')
+                'category' => $ticket->ticketCategory,
+                'created_at' => $ticket->created_at->format('Y-m-d H:i:s'),
+                'updated_at' => $ticket->updated_at->format('Y-m-d H:i:s')
             ];
 
             $ticketsCollection->push($t);
