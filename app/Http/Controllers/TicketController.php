@@ -19,7 +19,7 @@ class TicketController extends Controller
 
         if($user->role_id == 3)
         {
-            $ticket->resident_id = $user->residents[0]->id;
+            $ticket->resident_id = $user->resident->id;
             $ticket->ticket_status_id = $request->ticket_status_id;
             $ticket->ticket_category_id = $request->ticket_category_id;
             $ticket->message = $request->message;
@@ -87,7 +87,7 @@ class TicketController extends Controller
             $t = [
                 'id' => $ticket->id,
                 'message' => $ticket->message,
-                'user' => $ticket->user,
+                'user' => $ticket->resident->user,
                 'status' => $ticket->ticketStatus,
                 'created_at' => $ticket->created_at->format('Y-m-d H:i:s')
             ];
