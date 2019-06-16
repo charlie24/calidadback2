@@ -18,6 +18,8 @@ class InvitationController extends Controller
 
         if( $role == 1)
         {
+            $invitations = Invitation::all();
+
             foreach ($invitations as $invitation) {
                 $i = [
                     'id' => $invitation->id,
@@ -175,11 +177,92 @@ class InvitationController extends Controller
 
     public function search(Request $request)
     {
+        $user = $request->user();
+        $role = $user->role->id;
+        $invitationsCollection = collect([]);
 
+        if( $role == 1)
+        {
+            $invitations = Invitation::where('dni','like','%'+$request->dni+'%')->orWhere('name','like','%'+$request->name+'%')->get();
+
+            foreach ($invitations as $invitation) {
+                $i = [
+                    'id' => $invitation->id,
+                    'name' => $invitation->name,
+                    'dni' => $invitation->dni,
+                    'email' => $invitation->email,
+                    'comment' => $invitation->comment,
+                    'invitation_date' => $invitation->invitation_date,
+                    'check' => $invitation->check,
+                    'regular_visitor' => $invitation->regular_visitor,
+                    'event_id' => $invitation->event_id,
+                    'resident_id' => $invitation->resident_id,
+                    'resident_name' => $invitation->resident->user->name
+                ];
+    
+                $invitationsCollection->push($i);
+            }
+        }
+        else if ($role == 2 || $role == 4)
+        {
+            $users = User::where('edifice_id', $user->edifice->id)->get();
+
+            $residents = Resident::whereIn('user_id', $users->pluck('id'))->get();
+
+            $invitations = Invitation::whereIn('resident_id',$residents->pluck('id'))->OrWhere('dni','like','%'+$request->dni+'%')->orWhere('name','like','%'+$request->name+'%')->get();
+
+            foreach ($invitations as $invitation) {
+                $i = [
+                    'id' => $invitation->id,
+                    'name' => $invitation->name,
+                    'dni' => $invitation->dni,
+                    'email' => $invitation->email,
+                    'comment' => $invitation->comment,
+                    'invitation_date' => $invitation->invitation_date,
+                    'check' => $invitation->check,
+                    'regular_visitor' => $invitation->regular_visitor,
+                    'event_id' => $invitation->event_id,
+                    'resident_id' => $invitation->resident_id,
+                    'resident_name' => $invitation->resident->user->name
+                ];
+    
+                $invitationsCollection->push($i);
+            }
+        }
+
+        else if($role == 3)
+        {
+            $invitations = Invitation::where('resident_id',$user->residents[0]->id)->OrWhere('dni','like','%'+$request->dni+'%')->orWhere('name','like','%'+$request->name+'%')->get();
+
+            foreach ($invitations as $invitation) {
+                $i = [
+                    'id' => $invitation->id,
+                    'name' => $invitation->name,
+                    'dni' => $invitation->dni,
+                    'email' => $invitation->email,
+                    'comment' => $invitation->comment,
+                    'invitation_date' => $invitation->invitation_date,
+                    'check' => $invitation->check,
+                    'regular_visitor' => $invitation->regular_visitor,
+                    'event_id' => $invitation->event_id,
+                    'resident_id' => $invitation->resident_id
+                ];
+    
+                $invitationsCollection->push($i);
+            }
+        }
+
+        return response()->json([
+            'invitations' => $invitationsCollection
+        ], 201);
     }
 
     public function delete($id)
     {
-        
+        $invitation = Invitation::where('id',$id)->delete();
+
+        return response()->json([
+            'message' => 'Successfully deleted'
+        ], 201);
     }
 }

@@ -63,6 +63,6 @@ class CommonAreaController extends Controller
 
     public function delete($id)
     {
-
+        
     }
 }
