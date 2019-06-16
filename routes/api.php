@@ -78,5 +78,7 @@ Route::group([
         Route::get('ticketStatus/{id}','TicketStatusController@ticketStatus');
         //Ticket Categories
         Route::get('ticketCategories','TicketCategoryController@list');
+        //Departments
+        Route::get('departmentsByEdifice','DepartmentController@listByEdifice');
     });
 });
