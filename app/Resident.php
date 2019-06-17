@@ -32,4 +32,28 @@ class Resident extends Model
     {
         return $this->hasMany('App\Invitation');
     }
+
+    public function scopeSearch($query, $term) {
+        if (!$term) return $query;
+
+        return $query->when(!$this->isJoined($query, 'users'), function($query) {
+            return $query->join('users', 'users.id', '=', 'residents.user_id');
+        })
+        ->whereRaw("LOWER(users.name) LIKE ? ", '%'.strtolower(trim($term)).'%')
+        ->orWhereRaw("LOWER(users.email) LIKE ? ", '%'.strtolower(trim($term)).'%');
+    }
+
+    public static function isJoined($query, $table)
+    {
+        $joins = $query->getQuery()->joins;
+        if($joins == null) {
+            return false;
+        }
+        foreach ($joins as $join) {
+            if ($join->table == $table) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

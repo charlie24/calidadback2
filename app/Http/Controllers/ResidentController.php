@@ -14,10 +14,10 @@ class ResidentController extends Controller
     {
         $user = $request->user();
 
-        $residents = Resident::join('users', function($join) use ($user) {
-            $join->on('users.id', '=', 'residents.user_id')
-                ->where('users.edifice_id', $user->edifice_id);
-        })->paginate($request->rowsPerPage);
+        $residents = Resident::join('users', 'users.id', '=', 'residents.user_id')
+        ->where('users.edifice_id', $user->edifice_id)
+        ->search($request->search)
+        ->paginate($request->rowsPerPage);
 
         $residentsCollection = collect([]);
 
