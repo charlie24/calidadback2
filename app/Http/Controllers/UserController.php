@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Resident;
 use App\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ResidentCreated;
+use Illuminate\Support\Facades\Log;
 
 define('RESIDENT_ROLE_ID', 3);
 
@@ -12,51 +15,35 @@ class UserController extends Controller
 {
     public function createResident(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|confirmed'
-        ]);
-        
         $auth = $request->user();
-        $resident = new Resident();
-        $user = new User();
         
-        switch ($auth->role_id) {
-            case 1:
-                $user->name = $request->name;
-                $user->email = $request->email;
-                $user->password = bcrypt($request->password);
-                $user->role_id = RESIDENT_ROLE_ID;
-                $user->edifice_id = $request->edifice_id;
-            
-                $user->save();
-            
-                $resident->user_id = $user->id;
-                $resident->department_id = $request->department_id;
-                $resident->save();
-                break;
+        if($auth->role_id == 1 || $auth->role_id == 2) {
+            $request->validate([
+                'name' => 'required|string',
+                'email' => 'required|string|email|unique:users',
+            ]);
 
-            case 2:
-                $user->name = $request->name;
-                $user->email = $request->email;
-                $user->password = bcrypt($request->password);
-                $user->role_id = RESIDENT_ROLE_ID;
-                $user->edifice_id = $auth->edifice_id;
-            
-                $user->save();
-            
-                $resident->user_id = $user->id;
-                $resident->department_id = $request->department_id;
-                $resident->save();
-                break;
+            $resident = new Resident();
+            $user = new User();
 
-            default:
-                return response()->json([ 'message' => 'unauthorized role'], 401);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->role_id = RESIDENT_ROLE_ID;
+            $user->edifice_id = $auth->edifice_id;
+        
+            $user->save();
+        
+            $resident->user_id = $user->id;
+            $resident->department_id = $request->department_id;
+            $resident->save();
 
+            Mail::to($user)->send(new ResidentCreated());
+
+            return response()->json([ 'message' => 'Successfully created'], 201);
+
+        } else {
+            return response()->json([ 'message' => 'unauthorized role'], 401);
         }
-
-        return response()->json([ 'message' => 'Successfully created'], 201);
-
     }
 }
