@@ -62,6 +62,7 @@ Route::group([
         Route::post('invitation/create','InvitationController@create');
         Route::post('invitation/{id}/addGuest','InvitationController@addGuest');
         Route::get('invitations','InvitationController@list');
+        Route::get('invitations/byEvent/{id}','InvitationController@listByEvent');
         Route::get('invitation/{id}','InvitationController@invitation');
         Route::post('invitation/update/{id}','InvitationController@update');
         Route::post('invitation/delete/{id}','InvitationController@delete');

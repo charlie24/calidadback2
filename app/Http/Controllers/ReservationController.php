@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use App\Reservation;
 use App\User;
 use App\CommonArea;
+use App\Event;
 
 class ReservationController extends Controller
 {
@@ -83,6 +84,7 @@ class ReservationController extends Controller
         $user = $request->user();
         $reservation = new Reservation();
         $commonArea = CommonArea::find($request->common_area_id);
+        $event = new Event();
 
         if($user->role_id == 3)
         {
@@ -95,6 +97,15 @@ class ReservationController extends Controller
 
             $commonArea->available = true;
             $commonArea->update();
+
+            if($request->hasEvent)
+            {
+                $event->title = $request->title;
+                $event->details = $request->details;
+                $event->reservation_id = $reservation->id;
+
+                $event-save();
+            }
     
             return response()->json([
                 'message' => 'Successfully created reservation!'
