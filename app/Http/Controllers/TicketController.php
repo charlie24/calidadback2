@@ -109,7 +109,7 @@ class TicketController extends Controller
     {
         $ticket = Ticket::find($id);
         $commentsCollection = collect([]);
-        $comments = Comment::where('ticket_id',$id)->get();
+        $comments = Comment::where('ticket_id',$id)->orderBy('created_at', 'desc')->get();
 
         foreach ($comments as $comment) {
             $c = [
