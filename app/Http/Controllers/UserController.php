@@ -46,4 +46,13 @@ class UserController extends Controller
             return response()->json([ 'message' => 'unauthorized role'], 401);
         }
     }
+
+    public function deleteResident($id) {
+        $resident = Resident::where('id', $id)->first();
+        $resident->user->delete();
+        
+        return response()->json([
+            'message' => 'Successfully deleted'
+        ], 200);
+    }
 }
