@@ -95,7 +95,7 @@ class ReservationController extends Controller
             
             $reservation->save();
 
-            $commonArea->available = true;
+            $commonArea->available = false;
             $commonArea->update();
 
             if($request->hasEvent)
