@@ -104,7 +104,7 @@ class ReservationController extends Controller
                 $event->details = $request->details;
                 $event->reservation_id = $reservation->id;
 
-                $event-save();
+                $event->save();
             }
     
             return response()->json([
