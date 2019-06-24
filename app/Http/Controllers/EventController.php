@@ -8,8 +8,13 @@ use App\Event;
 
 class EventController extends Controller
 {
-    public function list()
+    public function get($id)
     {
+        $event = Event::find($id);
 
+        return response()->json([
+            'event' => $event,
+            'invitations' => $event->invitations
+        ], 201);
     }
 }

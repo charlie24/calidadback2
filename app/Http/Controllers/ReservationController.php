@@ -86,6 +86,13 @@ class ReservationController extends Controller
         $commonArea = CommonArea::find($request->common_area_id);
         $event = new Event();
 
+        if($commonArea->available == false)
+        {
+            return response()->json([
+                'message' => 'Common Area not available'
+            ], 401);
+        }
+
         if($user->role_id == 3)
         {
             $reservation->resident_id = $user->resident->id;

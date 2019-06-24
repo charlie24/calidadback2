@@ -49,6 +49,8 @@ Route::group([
         Route::post('reservation/{id}/changeStatus','ReservationController@change_status');
         Route::get('reservation/{id}','ReservationController@reservation');
         Route::post('reservation/delete/{id}','ReservationController@delete');
+        //Events
+        Route::get('event/{id}','EventController@get');
         //Tickets
         Route::post('ticket/{id}/changeStatus','TicketController@changeStatus');
         Route::post('ticket/create','TicketController@create');
