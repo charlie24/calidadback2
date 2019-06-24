@@ -158,4 +158,11 @@ class AuthController extends Controller
         $notifications = $user->notifications()->limit(10)->get();
         return response()->json($notifications);
     }
+
+    public function readNotification(Request $request, $id) {
+        $user = $request->user();
+        $notification = $user->notifications()->where('id', $id)->first();
+        $notification->markAsRead();
+        return response()->json(['message' => 'Success'], 200);
+    }
 }
