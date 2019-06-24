@@ -29,6 +29,7 @@ Route::group([
         //Users
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
+        Route::get('notifications', 'AuthController@notifications');
         //Residents
         Route::get('residents', 'ResidentController@list');
         Route::post('resident/create','UserController@createResident');

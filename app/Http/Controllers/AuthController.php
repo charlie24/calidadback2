@@ -152,4 +152,10 @@ class AuthController extends Controller
 
         }
     }
+
+    public function notifications(Request $request) {
+        $user = $request->user();
+        $notifications = $user->notifications()->limit(10)->get();
+        return response()->json($notifications);
+    }
 }
