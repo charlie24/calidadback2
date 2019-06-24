@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    HOLA {{ $user->name }}
-    {{ $password }}
+    <h3>Nuevo password!</h3>
+    <h4>{{ $password }}</h4>
 </body>
 </html>

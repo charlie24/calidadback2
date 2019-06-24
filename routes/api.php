@@ -35,6 +35,7 @@ Route::group([
         Route::get('residents', 'ResidentController@list');
         Route::post('resident/create','UserController@createResident');
         Route::post('resident/{id}/delete', 'UserController@deleteResident');
+        Route::post('resident/{id}/generatePassword', 'UserController@generatePassword');
         //Roles
         Route::post('role/create','RoleController@create');
         Route::post('role/update/{id}','RoleController@update');

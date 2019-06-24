@@ -7,6 +7,7 @@ use App\Resident;
 use App\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ResidentCreated;
+use App\Mail\ResidentPasswordGenerated;
 use Illuminate\Support\Facades\Log;
 
 define('RESIDENT_ROLE_ID', 3);
@@ -26,9 +27,11 @@ class UserController extends Controller
             $resident = new Resident();
             $user = new User();
 
+            $password = str_random(8);
+
             $user->name = $request->name;
             $user->email = $request->email;
-            $user->password = bcrypt($request->password);
+            $user->password = bcrypt($password);
             $user->role_id = RESIDENT_ROLE_ID;
             $user->edifice_id = $auth->edifice_id;
         
@@ -38,7 +41,7 @@ class UserController extends Controller
             $resident->department_id = $request->department_id;
             $resident->save();
 
-            Mail::to($user)->send(new ResidentCreated());
+            Mail::to($user)->send(new ResidentCreated($user, $password));
 
             return response()->json([ 'message' => 'Successfully created'], 201);
 
@@ -53,6 +56,21 @@ class UserController extends Controller
         
         return response()->json([
             'message' => 'Successfully deleted'
+        ], 200);
+    }
+
+    public function generatePassword(Request $request, $id) {
+        $resident = Resident::where('id', $id)->first();
+        $user = $resident->user;
+
+        $new_password = str_random(8);
+        $user->password = bcrypt($new_password);
+        $user->save();
+
+        Mail::to($user)->send(new ResidentPasswordGenerated($user, $new_password));
+
+        return response()->json([
+            'message' => 'Success'
         ], 200);
     }
 }

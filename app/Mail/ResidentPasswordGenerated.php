@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ResidentCreated extends Mailable
+class ResidentPasswordGenerated extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -33,6 +33,6 @@ class ResidentCreated extends Mailable
     public function build()
     {
         return $this->from('calidad@software.com')
-                    ->view('emails.residents.created');
+                    ->view('emails.residents.password_generated');
     }
 }
