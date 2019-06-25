@@ -8,6 +8,7 @@ use App\Reservation;
 use App\User;
 use App\CommonArea;
 use App\Event;
+use Illuminate\Support\Facades\DB;
 
 class ReservationController extends Controller
 {
