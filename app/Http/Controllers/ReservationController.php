@@ -112,6 +112,13 @@ class ReservationController extends Controller
                 $event->reservation_id = $reservation->id;
 
                 $event->save();
+
+                foreach ($request->invitations_id as $id) {
+                    DB::table('invitations')
+                        ->where('id', $id)
+                        ->update(['event_id' => $event->id]);
+                }
+
             }
     
             return response()->json([
