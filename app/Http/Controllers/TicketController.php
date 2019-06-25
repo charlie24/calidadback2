@@ -79,10 +79,10 @@ class TicketController extends Controller
         $ticketsCollection = collect([]);
         $user = $request->user();
         $tickets = Ticket::when($user->role_id == 3, function($query) use($user) {
-                        return $query->where('resident_id', $user->resident->id);
+                        return $query->where('tickets.resident_id', $user->resident->id);
                     })
                     ->search($request->search)
-                    ->orderBy('updated_at', 'desc')
+                    ->orderBy('tickets.updated_at', 'desc')
                     ->paginate($request->rowsPerPage);
 
         foreach ($tickets as $ticket) {

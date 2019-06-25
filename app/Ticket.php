@@ -37,9 +37,29 @@ class Ticket extends Model
         return $this->hasManyThrough('App\User', 'App\Comment');
     }
 
-
     public function scopeSearch($query, $term) {
         if (!$term) return $query;
-        return $query->whereRaw("LOWER(message) LIKE ? ", '%'.strtolower(trim($term)).'%');
+
+        return $query->when(!$this->isJoined($query, 'residents'), function($query) {
+            return $query->join('residents', 'residents.id', '=', 'tickets.resident_id');
+        })->when(!$this->isJoined($query, 'users'), function($query) {
+            return $query->join('users', 'users.id', '=', 'residents.user_id');
+        })
+        ->whereRaw("LOWER(tickets.message) LIKE ? ", '%'.strtolower(trim($term)).'%')
+        ->orWhereRaw("LOWER(users.name) LIKE ? ", '%'.strtolower(trim($term)).'%');
+    }
+
+    public static function isJoined($query, $table)
+    {
+        $joins = $query->getQuery()->joins;
+        if($joins == null) {
+            return false;
+        }
+        foreach ($joins as $join) {
+            if ($join->table == $table) {
+                return true;
+            }
+        }
+        return false;
     }
 }

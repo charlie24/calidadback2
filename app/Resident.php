@@ -38,9 +38,12 @@ class Resident extends Model
 
         return $query->when(!$this->isJoined($query, 'users'), function($query) {
             return $query->join('users', 'users.id', '=', 'residents.user_id');
+        })->when(!$this->isJoined($query, 'departments'), function($query) {
+            return $query->join('departments', 'departments.id', '=', 'residents.department_id');
         })
         ->whereRaw("LOWER(users.name) LIKE ? ", '%'.strtolower(trim($term)).'%')
-        ->orWhereRaw("LOWER(users.email) LIKE ? ", '%'.strtolower(trim($term)).'%');
+        ->orWhereRaw("LOWER(users.email) LIKE ? ", '%'.strtolower(trim($term)).'%')
+        ->orWhereRaw("LOWER(departments.number) = ? ", strtolower(trim($term)));
     }
 
     public static function isJoined($query, $table)
