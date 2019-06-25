@@ -11,7 +11,7 @@ use App\Event;
 
 class ReservationController extends Controller
 {
-    public function list()
+    public function list(Request $request)
     {
         $user = $request->user();
         $role = $user->role->id;
