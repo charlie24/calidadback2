@@ -32,7 +32,7 @@ class ReservationController extends Controller
                     'user' => $reservation->resident->user,
                     'status' => $reservation->status,
                     'commonArea' => $reservation->commonArea,
-                    'event' => $reservation->events
+                    'events' => $reservation->events
                 ];
     
                 $reservationsCollection->push($r);
@@ -52,7 +52,7 @@ class ReservationController extends Controller
                     'user' => $reservation->resident->user,
                     'status' => $reservation->status,
                     'commonArea' => $reservation->commonArea,
-                    'event' => $reservation->events
+                    'events' => $reservation->events
                 ];
     
                 $reservationsCollection->push($r);
@@ -71,7 +71,7 @@ class ReservationController extends Controller
                     'user' => $reservation->resident->user,
                     'status' => $reservation->status,
                     'commonArea' => $reservation->commonArea,
-                    'event' => $reservation->events
+                    'events' => $reservation->events
                 ];
     
                 $reservationsCollection->push($r);
