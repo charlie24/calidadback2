@@ -120,7 +120,8 @@ class AuthController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'role_id' => $user->role->id,
-                'role_name' => $user->role->name
+                'role_name' => $user->role->name,
+                'edifice' => $user->edifice
                 ], 200);
             
             case ADMINISTRADOR_ID:    
@@ -129,7 +130,8 @@ class AuthController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'role_id' => $user->role->id,
-                'role_name' => $user->role->name
+                'role_name' => $user->role->name,
+                'edifice' => $user->edifice
                 ], 200);
             
             case RESIDENTE_ID:   
@@ -138,7 +140,8 @@ class AuthController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'role_id' => $user->role->id,
-                'role_name' => $user->role->name
+                'role_name' => $user->role->name,
+                'edifice' => $user->edifice
                 ], 200);
 
             case RECEPCIONISTA_ID:
@@ -147,7 +150,8 @@ class AuthController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'role_id' => $user->role->id,
-                'role_name' => $user->role->name
+                'role_name' => $user->role->name,
+                'edifice' => $user->edifice
                 ], 200);
 
         }
