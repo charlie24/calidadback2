@@ -31,7 +31,8 @@ class ReservationController extends Controller
                     'reservation_end_date' => $reservation->reservation_end_date,
                     'user' => $reservation->resident->user,
                     'status' => $reservation->status,
-                    'commonArea' => $reservation->commonArea
+                    'commonArea' => $reservation->commonArea,
+                    'event' => $reservation->events
                 ];
     
                 $reservationsCollection->push($r);
@@ -50,7 +51,8 @@ class ReservationController extends Controller
                     'reservation_end_date' => $reservation->reservation_end_date,
                     'user' => $reservation->resident->user,
                     'status' => $reservation->status,
-                    'commonArea' => $reservation->commonArea
+                    'commonArea' => $reservation->commonArea,
+                    'event' => $reservation->events
                 ];
     
                 $reservationsCollection->push($r);
@@ -68,7 +70,8 @@ class ReservationController extends Controller
                     'reservation_end_date' => $reservation->reservation_end_date,
                     'user' => $reservation->resident->user,
                     'status' => $reservation->status,
-                    'commonArea' => $reservation->commonArea
+                    'commonArea' => $reservation->commonArea,
+                    'event' => $reservation->events
                 ];
     
                 $reservationsCollection->push($r);
