@@ -27,7 +27,8 @@ class UserController extends Controller
             $resident = new Resident();
             $user = new User();
 
-            $password = str_random(8);
+            //$password = str_random(8);
+            $password = '123456';
 
             $user->name = $request->name;
             $user->email = $request->email;
@@ -41,7 +42,7 @@ class UserController extends Controller
             $resident->department_id = $request->department_id;
             $resident->save();
 
-            Mail::to($user)->send(new ResidentCreated($user, $password));
+            //Mail::to($user)->send(new ResidentCreated($user, $password));
 
             return response()->json([ 'message' => 'Successfully created'], 201);
 
@@ -63,11 +64,12 @@ class UserController extends Controller
         $resident = Resident::where('id', $id)->first();
         $user = $resident->user;
 
-        $new_password = str_random(8);
+        //$new_password = str_random(8);
+        $new_password = '123456';
         $user->password = bcrypt($new_password);
         $user->save();
 
-        Mail::to($user)->send(new ResidentPasswordGenerated($user, $new_password));
+        //Mail::to($user)->send(new ResidentPasswordGenerated($user, $new_password));
 
         return response()->json([
             'message' => 'Success'

@@ -13,10 +13,16 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('roles')->insert([
             [
-                'name' => 'Administrador',
+                'name' => 'Administrador General',
             ],
             [
-                'name' => 'Vecino' ,
+                'name' => 'Administrador de edificio' ,
+            ],
+            [
+                'name' => 'Residente' ,
+            ],
+            [
+                'name' => 'Recepcionista' ,
             ]
         ]);
 
