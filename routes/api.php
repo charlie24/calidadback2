@@ -87,5 +87,19 @@ Route::group([
         Route::get('ticketCategories','TicketCategoryController@list');
         //Departments
         Route::get('departmentsByEdifice','DepartmentController@listByEdifice');
+        //Votes
+        Route::post('votes/create','VoteController@store');
+        Route::post('votes/update/{id}','VoteController@update');
+        Route::post('votes/delete/{id}','VoteController@destroy');
+        Route::get('votes/{id}','VoteController@show');
+        Route::get('votes','VoteController@list');
+        //Choices
+        Route::post('choices/create','ChoiceController@store');
+        Route::post('choices/update/{id}','ChoiceController@update');
+        Route::post('choices/delete/{id}','ChoiceController@destroy');
+        Route::get('choices/{id}','ChoiceController@show');
+        Route::get('choices/byVote/{id}','ChoiceController@list');
+        //Voting
+        Route::post('voting/create','VotingController@store');
     });
 });
