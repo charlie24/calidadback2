@@ -101,5 +101,22 @@ Route::group([
         Route::get('choices/byVote/{id}','ChoiceController@list');
         //Voting
         Route::post('voting/create','VotingController@store');
+        //Incidence States
+        Route::get('incidenceStates','IncidenceStatusController@list');
+        //Incidence Categories
+        Route::get('incidenceCategories','IncidenceCategoryController@list');
+        //Incidences
+        Route::post('incidences/create','IncidenceController@store');
+        Route::post('incidences/update/{id}','IncidenceController@update');
+        Route::post('incidences/delete/{id}','IncidenceController@destroy');
+        Route::get('incidences/{id}','IncidenceController@show');
+        Route::get('incidences','IncidenceController@list');
+        //Staff
+        Route::post('staff/create','ExternalStaffController@store');
+        Route::post('staff/update/{id}','ExternalStaffController@update');
+        Route::post('staff/delete/{id}','ExternalStaffController@destroy');
+        Route::get('staff/{id}','ExternalStaffController@show');
+        Route::get('staff','ExternalStaffController@list');
+        Route::get('staff/incidence/{id}','ExternalStaffController@listByIncidence');
     });
 });
