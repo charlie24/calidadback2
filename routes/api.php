@@ -108,9 +108,11 @@ Route::group([
         //Incidences
         Route::post('incidences/create','IncidenceController@store');
         Route::post('incidences/update/{id}','IncidenceController@update');
+        Route::post('incidences/qualify/{id}','IncidenceController@qualify');
         Route::post('incidences/delete/{id}','IncidenceController@destroy');
         Route::get('incidences/{id}','IncidenceController@show');
         Route::get('incidences','IncidenceController@list');
+        Route::get('incidencesByResident/{id}','IncidenceController@listByResident');
         //Staff
         Route::post('staff/create','ExternalStaffController@store');
         Route::post('staff/update/{id}','ExternalStaffController@update');
@@ -118,5 +120,19 @@ Route::group([
         Route::get('staff/{id}','ExternalStaffController@show');
         Route::get('staff','ExternalStaffController@list');
         Route::get('staff/incidence/{id}','ExternalStaffController@listByIncidence');
+        //Document Type
+        Route::get('documents','DocumentTypeController@list');
+        //Drivers
+        Route::post('drivers/create','DriverController@store');
+        Route::post('drivers/update/{id}','DriverController@update');
+        Route::post('drivers/delete/{id}','DriverController@destroy');
+        Route::get('drivers/{id}','DriverController@show');
+        Route::get('drivers','DriverController@list');
+        //Movings
+        Route::post('movings/create','MovingController@store');
+        Route::post('movings/update/{id}','MovingController@update');
+        Route::post('movings/delete/{id}','MovingController@destroy');
+        Route::get('movings/{id}','MovingController@show');
+        Route::get('movings','MovingController@list');
     });
 });

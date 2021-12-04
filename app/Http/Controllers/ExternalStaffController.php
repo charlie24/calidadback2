@@ -7,7 +7,7 @@ use App\ExternalStaff;
 
 class ExternalStaffController extends Controller
 {
-    public function list($id)
+    public function list()
     {
         $staff = ExternalStaff::all();
 
@@ -27,7 +27,7 @@ class ExternalStaffController extends Controller
 
     public function store(Request $request)
     {
-        $staff = new Incidence();
+        $staff = new ExternalStaff();
 
         $staff->incidence_id = $request->incidence_id;
         $staff->first_name = $request->first_name;

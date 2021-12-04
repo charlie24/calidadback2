@@ -4,12 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Incidence;
+use App\Resident;
+use App\Department;
 
 class IncidenceController extends Controller
 {
-    public function list($id)
+    public function list()
     {
         $incidences = Incidence::all();
+
+        return response()->json([
+            'incidences' => $incidences
+        ], 201);
+    }
+
+    public function listByResident($id)
+    {
+        $resident = Resident::find($id);
+
+        $incidences = Incidence::where('department_id', $resident->department_id)->get();
 
         return response()->json([
             'incidences' => $incidences
@@ -63,6 +76,20 @@ class IncidenceController extends Controller
 
         return response()->json([
             'message' => 'Successfully updated incidence!'
+        ], 201);
+    }
+
+    
+    public function qualify(Request $request, $id)
+    {
+        $incidence = Incidence::find($id);
+
+        $incidence->calification = $request->calification;
+
+        $incidence->update();
+
+        return response()->json([
+            'message' => 'Successfully qualified incidence!'
         ], 201);
     }
 
